@@ -1,0 +1,20 @@
+with open('Day6/input.txt', 'r') as file:
+    lines = file.readlines()
+times = [time.strip() for time in lines[0].split(' ')[1:] if time.strip() != '']
+distances = [dist.strip() for dist in lines[1].split(' ')[1:] if dist.strip() != '']
+print(times)
+print(distances)
+product = 1
+times = []
+distances = []
+times.append(56977793)
+distances.append(499221010971440)
+for raceInd in range(len(times)):
+    possible = 0
+    time = int(times[raceInd])
+    distance = int(distances[raceInd])
+    for i in range(time+1):
+        if i*(time-i) > distance:
+            possible += 1
+
+print(possible)

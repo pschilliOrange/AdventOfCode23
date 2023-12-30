@@ -1,0 +1,45 @@
+with open('Day12/sample.txt', 'r') as file:
+    lines = file.readlines()
+
+def check(line, nums):
+    hashtagCount = 0
+    groups = []
+    for char in line:
+        if char == '.':
+            if hashtagCount != 0:
+                groups.append(str(hashtagCount))
+                hashtagCount = 0
+        else:
+            hashtagCount += 1
+    if line[-1] == '#':
+        groups.append(str(hashtagCount))
+    if groups == nums:
+        return True
+    else: 
+        return False
+
+totalSum = 0
+for line in lines:
+    lineSum = 0
+    numlessLine = line.split(' ')[0]
+    nums = line.split(' ')[1].strip().split(',')
+    NumQs = numlessLine.count('?')
+    for i in range(2**NumQs):
+        binaryNum = bin(i)[2:].zfill(NumQs)
+        count = 0
+        newLine = []
+        for char in numlessLine:
+            if char == '?':
+                if binaryNum[count] == '1':
+                    newLine.append('#')
+                else:
+                    newLine.append('.')
+                count += 1
+            else:
+                newLine.append(char)
+        possible = check(newLine, nums)
+        if possible == True:
+            totalSum += 1
+            lineSum += 1
+    print(lineSum)
+print(totalSum)

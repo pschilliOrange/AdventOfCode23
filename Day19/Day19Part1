@@ -1,0 +1,52 @@
+with open('Day19/input.txt', 'r') as file:
+    lines = file.readlines()
+dict_flows = {}
+for i in range(513):
+    line = lines[i]
+    key, ruleString = line.split('{', 1)
+    key = key.strip()
+    ruleString = ruleString.rstrip('}\n')
+    rules = []
+    rules = ruleString.split(',')
+    dict_flows[key] = rules
+
+def flow(key, part):
+    for rule in dict_flows[key]:
+        if rule == dict_flows[key][-1]:
+            key = rule
+            return key
+        if rule[1] == '<':
+            if part[rule[0]] < int(rule.split('<')[1].split(':')[0]):
+                key = rule.split(':')[1]
+                return key
+        elif rule[1] == '>':
+            if part[rule[0]] > int(rule.split('>')[1].split(':')[0]):
+                key = rule.split(':')[1]
+                return key
+
+parts_dict = {}
+for i in range(515, len(lines)):
+    inner_dict = {}
+    parts = lines[i][1:-2].split(',')
+    inner_dict['x'] = int(parts[0].split('=')[1])
+    inner_dict['m'] = int(parts[1].split('=')[1])
+    inner_dict['a'] = int(parts[2].split('=')[1])
+    inner_dict['s'] = int(parts[3].split('=')[1])
+    parts_dict[i-515] = inner_dict
+
+def sum_part(part):
+    sum = part['x'] + part['m'] + part['a'] + part['s']
+    return sum
+parts_Sum = 0
+for i in range(0,len(lines)-515):
+    part = parts_dict[i]
+    done = False
+    key = 'in'
+    while not done:
+        key = flow(key, part)
+        if key == 'A':
+            parts_Sum += sum_part(part)
+            done = True
+        elif key == 'R':
+            done = True
+print(parts_Sum)

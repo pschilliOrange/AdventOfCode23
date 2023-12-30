@@ -73,7 +73,6 @@ for i in range(len(array)):
             elif cumilation != 0:
                 print('error')
         if parity != -1:
-            print('Error, parity off at end of line')
-                
+            print('Error, parity off at end of line')          
 print(count)
             

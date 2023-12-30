@@ -1,5 +1,5 @@
 import numpy as np
-with open('Day5/example2.txt', 'r') as file:
+with open('Day5/example.txt', 'r') as file:
     content = file.read()
 # Splitting the content into lines
 lines = content.splitlines()
@@ -9,6 +9,13 @@ currentMap = []
 max = 0
 locations = []
 sameMap = 1
+seeds = []
+for i in range(14):
+    seeds.append(79 + i)
+for i in range(13):
+    seeds.append(55+i)
+seeds = []
+seeds.append(70)
 for y in seeds:
     seed = y
     for i in range(0,len(lines)):
@@ -28,7 +35,10 @@ for y in seeds:
             y = nums[0]+(y-nums[1])
             sameMap = 0
         
-    locations.append(y)
+    if y not in locations:
+        locations.append(y)
         #if sameMap = 0:
 print(locations)
+print(min(locations))
+print(len(locations))
 #print(min(locations))
